@@ -10,14 +10,15 @@ A hearthis.at Music plugin for the original Xbox using XBMC4Xbox.
 - (WIP) Livestream support! Listen to your favourite DJs perform live!
 - Want to listen to a specific genre? There's a full genre list to choose from!
 - Search functionality to find that perfect set by that one artist!
-- Works on the original Xbox, unlike the Kodi plugin! (which is also more advanced)
+- Works on the original Xbox, unlike the Kodi plugin! (which, to be fair, is more advanced)
 
 ## Installation:
 - Copy "plugin.music.hearthisatX" to "Q:/plugins/music" on your Xbox. 
 
 ## To Do:
-- Add Artists/Playlists/Sets/Songs/Genres/etc. to Search functionality
-- Bugfixes and optimizations
+- Add artist name beside track name
+- Add Artists/Playlists/Sets/Songs/Genres/etc. to search functionality
+- Bugfixes and optimizations.
 
  ## Not Planned:
-- Account Integration (on a system as old as the Xbox, it sounds like a security nightmare. If someone wants to take on the work, feel free to send a pull request!)
+- Account Integration(?) (on a system as old as the Xbox, it sounds like a security nightmare. If someone wants to take on the work, feel free to send a pull request!)
