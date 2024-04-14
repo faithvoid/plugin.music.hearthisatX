@@ -8,6 +8,9 @@ A HearThis.At Music plugin for the original Xbox using XBMC4Xbox.
 - Search functionality to find that perfect set by that one artist!
 - Works on the original Xbox, unlike the Kodi plugin! (which is also more advanced)
 
+## Installation:
+- Copy "plugin.music.hearthisatX" to "Q:/plugins/music" on your Xbox. 
+
 ## To Do:
 - Add Artists/Playlists/Sets/Songs/Genres/etc. to Search functionality
 - Bugfixes and optimizations
