@@ -9,7 +9,6 @@ A HearThis.At Music plugin for the original Xbox using XBMC4Xbox.
 - Works on the original Xbox, unlike the Kodi plugin! (which is also more advanced)
 
 ## To Do:
-- Fix Search functionality
 - Add Artists/Playlists/Sets/Songs/Genres/etc. to Search functionality
 
  ## Not Planned:
