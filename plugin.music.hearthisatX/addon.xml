@@ -1,0 +1,16 @@
+<addon id="plugin.music.hearthisatX" name="hearthis.at" version="1.0.0" provider-name="faithvoid" standalone="yes">
+<requires>
+<import addon="xbmc.python" version="2.7.11"/>
+<import addon="script.module.xbmcswift2" version="2.4.0"/>
+</requires>
+<extension point="xbmc.python.pluginsource" library="default.py">
+<provides>music</provides>
+</extension>
+<extension point="xbmc.addon.metadata">
+<platform>xbox</platform>
+<website>https://hearthis.at</website>
+<license>GPL-2.0-only</license>
+<summary lang="en">hearthis.at</summary>
+<description lang="en_US">Share your mixes, tracks and sounds with the world. Lossless streaming and unlimited uploads.</description>
+</extension>
+</addon>
