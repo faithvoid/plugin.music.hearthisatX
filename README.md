@@ -20,5 +20,8 @@ A hearthis.at Music plugin for the original Xbox using XBMC4Xbox.
 - Add Artists/Playlists/Sets/Songs/Genres/etc. to search functionality
 - Bugfixes and optimizations.
 
+## Bugs:
+- Some searches just don't work and will present a rate-limiting error. This doesn't seem to be an addon issue, this seems to be an API backend issue with HearThis not liking certain terms (usually terms around 4 characters or less). Try a longer query and try the same query on PC to see if it also gives you an error. 
+
  ## Not Planned:
 - Account Integration(?) (on a system as old as the Xbox, it sounds like a security nightmare. If someone wants to take on the work, feel free to send a pull request!)
