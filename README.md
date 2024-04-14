@@ -10,6 +10,7 @@ A HearThis.At Music plugin for the original Xbox using XBMC4Xbox.
 
 ## To Do:
 - Add Artists/Playlists/Sets/Songs/Genres/etc. to Search functionality
+- Bugfixes and optimizations
 
  ## Not Planned:
 - Account Integration (on a system as old as the Xbox, it sounds like a security nightmare. If someone wants to take on the work, feel free to send a pull request!)
