@@ -25,8 +25,12 @@ def list_tracks(tracks):
     """ Lists tracks in the XBMC/Kodi GUI """
     if tracks:
         for track in tracks:
-            li = ListItem(track['title'], iconImage='DefaultAudio.png', thumbnailImage=track.get('artwork_url', ''))
-            li.setInfo(type='Music', infoLabels={'Title': track['title'], 'Artist': track['user']['username']})
+            # Ensure both username and title are encoded as UTF-8 to handle non-ASCII characters
+            user = track['user']['username'].encode('utf-8') if isinstance(track['user']['username'], unicode) else track['user']['username']
+            title = track['title'].encode('utf-8') if isinstance(track['title'], unicode) else track['title']
+            display_title = "{} - {}".format(user, title)
+            li = ListItem(display_title, iconImage='DefaultAudio.png', thumbnailImage=track.get('artwork_url', ''))
+            li.setInfo(type='Music', infoLabels={'Title': title, 'Artist': user})
             addDirectoryItem(handle=int(sys.argv[1]), url=track['stream_url'], listitem=li, isFolder=False)
     else:
         Dialog().ok('Error', 'Failed to retrieve tracks')
