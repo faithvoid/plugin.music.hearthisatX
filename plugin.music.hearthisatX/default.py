@@ -41,7 +41,6 @@ def main_menu():
     base_url = sys.argv[0]
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=latest', listitem=ListItem('Latest Tracks', iconImage='DefaultFolder.png'), isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=popular', listitem=ListItem('Popular Tracks', iconImage='DefaultFolder.png'), isFolder=True)
-    addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=live', listitem=ListItem('Livestreams', iconImage='DefaultFolder.png'), isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=explore', listitem=ListItem('Explore', iconImage='DefaultFolder.png'), isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=genres', listitem=ListItem('Genres', iconImage='DefaultFolder.png'), isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=search', listitem=ListItem('Search Tracks', iconImage='DefaultFolder.png'), isFolder=True)
