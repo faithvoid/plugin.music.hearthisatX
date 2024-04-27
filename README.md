@@ -12,7 +12,7 @@ A hearthis.at Music plugin for the original Xbox using XBMC4Xbox.
 - Works on the original Xbox, unlike the Kodi plugin! (which, to be fair, is more advanced)
 
 ## Installation:
-- Copy "plugin.music.hearthisatX" to "Q:/plugins/music" on your Xbox. 
+- Copy "plugin.music.hearthisatX" to "Q:/plugins/music" (ie; the /plugins/music folder in your XBMC4Xbox installation) on your Xbox. 
 
 ## To Do:
 - Add Artists/Playlists/Sets/Songs/Genres/etc. to search functionality
