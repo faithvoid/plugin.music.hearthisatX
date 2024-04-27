@@ -7,12 +7,16 @@ from xbmc import Keyboard
 
 ## URLs for API-V2 ##
 
+# Base URL for API requests
 BASE_URL = 'https://api-v2.hearthis.at'
+
+# URLs for different feeds
 POPULAR_URL = BASE_URL + '/feed?type=popular&page={page}&count=20'
 FEATURED_URL = BASE_URL + '/feed?page={page}&count=20'
 LATEST_URL = BASE_URL + '/feed?type=new&page={page}&count=20'
 LIVE_URL = BASE_URL + '/feed?type=live&page={page}&count=20'
 
+# Function to fetch tracks from a given URL
 def fetch_tracks(url, page=1):
     url = url.format(page=page)
     try:
@@ -27,6 +31,7 @@ def fetch_tracks(url, page=1):
         print("Error retrieving data: %s" % str(e))
         return []
 
+# Function to add pagination controls to the list
 def add_pagination_controls(url, current_page, mode):
     """ Adds pagination controls to the list """
     current_page = int(current_page)
@@ -37,6 +42,7 @@ def add_pagination_controls(url, current_page, mode):
         addDirectoryItem(handle=int(sys.argv[1]), url='{0}?mode={1}&page={2}'.format(base_url, mode, current_page - 1), listitem=prev_page, isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url='{0}?mode={1}&page={2}'.format(base_url, mode, current_page + 1), listitem=next_page, isFolder=True)
 
+# Function to list tracks as ListItems in XBMC
 def list_tracks(tracks):
     if tracks and isinstance(tracks, list):
         for track in tracks:
@@ -52,7 +58,7 @@ def list_tracks(tracks):
     endOfDirectory(int(sys.argv[1]))
 
 
-
+# Main menu
 def main_menu():
     """ Main menu providing choices for Popular, Latest Tracks, and Genres """
     base_url = sys.argv[0]
@@ -63,6 +69,7 @@ def main_menu():
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=search', listitem=ListItem('Search', iconImage='DefaultFolder.png'), isFolder=True)
     endOfDirectory(int(sys.argv[1]))
 
+# Function to choose search type
 def choose_search_type():
     """ Asks user to select the type of search. """
     dialog = Dialog()
@@ -88,6 +95,7 @@ def search_tracks(query, search_type, page=1):
         list_tracks(tracks)
     add_pagination_controls(search_url, page, 'search&query={}&search_type={}'.format(urllib2.quote(query), search_type))
 
+# Function to initiate search
 def initiate_search(search_type=None, query=None, page=1):
     if not search_type:
         search_type = choose_search_type()
@@ -104,6 +112,7 @@ def initiate_search(search_type=None, query=None, page=1):
 
     search_tracks(query, search_type, page)
 
+# Function to fetch genres
 def fetch_genres():
     """ Fetches available genres from HearThis.At """
     genres_url = BASE_URL + '/categories/'
@@ -115,6 +124,7 @@ def fetch_genres():
         print("Error retrieving genres: %s" % str(e))
         return None
 
+# Function to list genres as ListItems in XBMC
 def list_genres():
     """ Lists available genres in the XBMC/Kodi GUI """
     genres = fetch_genres()
@@ -129,6 +139,7 @@ def list_genres():
         Dialog().ok('Error', 'Failed to retrieve genres')
     endOfDirectory(int(sys.argv[1]))
 
+# Function to parse parameters passed to the plugin
 def get_params():
     """ Parse parameters passed to the plugin """
     param_string = sys.argv[2]
@@ -138,6 +149,7 @@ def get_params():
         params = {pair.split('=')[0]: pair.split('=')[1] for pair in pairs if len(pair.split('=')) == 2}
     return params
 
+# Function to handle API responses
 def handle_api_response(data):
     try:
         # Example of processing and validating API response
@@ -151,7 +163,7 @@ def handle_api_response(data):
     except TypeError as e:
         print("Type error in processing data: %s" % e)
 
-
+# Main Function
 if __name__ == '__main__':
     params = get_params()
     mode = params.get('mode', None)
