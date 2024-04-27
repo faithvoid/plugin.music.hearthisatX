@@ -188,6 +188,7 @@ if __name__ == '__main__':
         list_tracks(tracks)
         add_pagination_controls(genre_tracks_url, page, 'genre&genre_id=' + genre_id)
     elif mode == 'search':
-        initiate_search('Tracks', query, page)
+        query = params.get('query', '')  # Get query parameter, default to empty string
+        initiate_search('Tracks', query, page)  # Initiate search with query
     else:
         main_menu()
