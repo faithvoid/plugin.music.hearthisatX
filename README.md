@@ -1,9 +1,10 @@
 # hearthis.at for XBMC4Xbox
 A hearthis.at Music plugin for the original Xbox using XBMC4Xbox.
 
-![20240414_035036](https://github.com/faithvoid/plugin.music.hearthisatX/assets/56975081/cabf9dbe-2ad2-4eda-ab96-54004f9c355f)
-![20240414_035029](https://github.com/faithvoid/plugin.music.hearthisatX/assets/56975081/b200a2df-9c38-43af-8bd4-4ac4e031da2a)
-
+![1](https://github.com/faithvoid/plugin.music.hearthisatX/assets/56975081/fc4f772a-2edd-444e-ae82-b66f693dff70)
+![2](https://github.com/faithvoid/plugin.music.hearthisatX/assets/56975081/2d1e3d72-ca59-4271-90c0-fbbed2774a40)
+![3](https://github.com/faithvoid/plugin.music.hearthisatX/assets/56975081/ed06b3f3-d914-4271-a184-cd68bb86fd53)
+![4](https://github.com/faithvoid/plugin.music.hearthisatX/assets/56975081/378ae99d-1fc0-4ca3-89c9-9f74964bf706)
 
 ## Features:
 - Listen to the latest and most popular tracks of hearthis.at, or use the Explore page to find new sets, just like on the original website!
