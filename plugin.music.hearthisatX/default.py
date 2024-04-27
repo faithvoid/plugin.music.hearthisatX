@@ -66,7 +66,7 @@ def main_menu():
 def choose_search_type():
     """ Asks user to select the type of search. """
     dialog = Dialog()
-    types = ['Tracks', 'Playlists']
+    types = ['Tracks']
     chosen = dialog.select('Search Type:', types)
     if chosen == -1:
         return None  # User cancelled the dialog
@@ -95,7 +95,7 @@ def initiate_search(search_type=None, query=None, page=1):
             return  # User cancelled the selection
     
     if not query:
-        keyboard = Keyboard('', 'Enter search query for ' + search_type)
+        keyboard = Keyboard('', 'Search')
         keyboard.doModal()
         if keyboard.isConfirmed():
             query = keyboard.getText()
@@ -176,8 +176,6 @@ if __name__ == '__main__':
         list_tracks(tracks)
         add_pagination_controls(genre_tracks_url, page, 'genre&genre_id=' + genre_id)
     elif mode == 'search':
-        search_type = params.get('search_type')
-        query = params.get('query')
-        initiate_search(search_type, query, page)
+        initiate_search('Tracks', query, page)
     else:
         main_menu()
