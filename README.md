@@ -10,7 +10,6 @@ A hearthis.at Music plugin for the original Xbox using XBMC4Xbox.
 - Listen to the latest and most popular tracks of hearthis.at, or use the Explore page to find new sets, just like on the original website!
 - Want to listen to a specific genre? There's a full genre list to choose from!
 - Search functionality to find that perfect set by that one artist!
-- Works on the original Xbox, unlike the Kodi plugin! (which, to be fair, is more advanced)
 
 ## Installation:
 - Copy "plugin.music.hearthisatX" to "Q:/plugins/music" (ie; the /plugins/music folder in your XBMC4Xbox installation) on your Xbox. 
