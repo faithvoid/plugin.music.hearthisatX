@@ -1,5 +1,5 @@
 # hearthis.at for XBMC4Xbox
-A hearthis.at Music plugin for the original Xbox using XBMC4Xbox.
+A hearthis.at Music plugin for the original Xbox using XBMC4Xbox (3.6+ as of v1.1).
 
 ![1](https://github.com/faithvoid/plugin.music.hearthisatX/assets/56975081/fc4f772a-2edd-444e-ae82-b66f693dff70)
 ![2](https://github.com/faithvoid/plugin.music.hearthisatX/assets/56975081/2d1e3d72-ca59-4271-90c0-fbbed2774a40)
