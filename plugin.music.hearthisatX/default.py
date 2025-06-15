@@ -4,9 +4,10 @@ import sys
 from xbmcgui import ListItem, Dialog
 from xbmcplugin import addDirectoryItem, endOfDirectory
 from xbmc import Keyboard
+import re
+import ssl
 
 ## URLs for API-V2 ##
-
 # Base URL for API requests
 BASE_URL = 'https://api-v2.hearthis.at'
 
@@ -16,11 +17,23 @@ FEATURED_URL = BASE_URL + '/feed?page={page}&count=20'
 LATEST_URL = BASE_URL + '/feed?type=new&page={page}&count=20'
 LIVE_URL = BASE_URL + '/feed?type=live&page={page}&count=20'
 
+# SSL
+try:
+    SSL_CONTEXT = ssl.create_default_context()
+except Exception:
+    SSL_CONTEXT = ssl._create_unverified_context()
+
+# Common headers
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:110.0) Gecko/20100101 Firefox/110.0'
+}
+
 # Function to fetch tracks from a given URL
 def fetch_tracks(url, page=1):
     url = url.format(page=page)
     try:
-        response = urllib2.urlopen(url)
+        request = urllib2.Request(url, headers=HEADERS)
+        response = urllib2.urlopen(request, context=SSL_CONTEXT)
         data = json.load(response)
         if isinstance(data, list):  # Ensure the response is a list
             return data
@@ -33,7 +46,6 @@ def fetch_tracks(url, page=1):
 
 # Function to add pagination controls to the list
 def add_pagination_controls(url, current_page, mode):
-    """ Adds pagination controls to the list """
     current_page = int(current_page)
     base_url = sys.argv[0]
     next_page = ListItem('Next Page >>', iconImage='DefaultFolder.png')
@@ -44,34 +56,57 @@ def add_pagination_controls(url, current_page, mode):
 
 # Function to list tracks as ListItems in XBMC
 def list_tracks(tracks):
-    if tracks and isinstance(tracks, list):
-        for track in tracks:
-            if isinstance(track, dict) and 'user' in track and 'username' in track['user']:
-                user = track['user']['username'].encode('utf-8') if isinstance(track['user']['username'], unicode) else track['user']['username']
-                title = track['title'].encode('utf-8') if isinstance(track['title'], unicode) else track['title']
-                display_title = "{} - {}".format(user, title)
-                li = ListItem(display_title, iconImage='DefaultAudio.png', thumbnailImage=track.get('artwork_url', ''))
-                li.setInfo(type='Music', infoLabels={'Title': title, 'Artist': user})
-                addDirectoryItem(handle=int(sys.argv[1]), url=track['stream_url'], listitem=li, isFolder=False)
-    else:
+    if not tracks or not isinstance(tracks, list):
         Dialog().ok('Error', 'Failed to retrieve tracks!')
-    endOfDirectory(int(sys.argv[1]))
+        endOfDirectory(int(sys.argv[1]))
+        return
 
+    for track in tracks:
+        if not isinstance(track, dict):
+            continue
+
+        # Extract metadata directly from the API
+        user = track.get('user', {}).get('username', 'Unknown')
+        title = track.get('title', 'Untitled')
+        stream_url = track.get('stream_url')
+        thumb = track.get('artwork_url', '') or track.get('thumb', '')
+        genre = track.get('genre', 'Unknown')
+        duration = int(track.get('duration', 0))
+
+        # Safe unicode handling (for Python 2)
+        try:
+            user = user.encode('utf-8') if isinstance(user, unicode) else user
+            title = title.encode('utf-8') if isinstance(title, unicode) else title
+        except NameError:
+            pass  # Python 3
+
+        display_title = "{} - {}".format(user, title)
+
+        li = ListItem(display_title, iconImage='DefaultAudio.png', thumbnailImage=thumb)
+        li.setInfo(type='Music', infoLabels={
+            'Title': title,
+            'Artist': user,
+            'Genre': genre,
+            'Duration': duration
+        })
+
+        addDirectoryItem(handle=int(sys.argv[1]), url=stream_url, listitem=li, isFolder=False)
+
+    endOfDirectory(int(sys.argv[1]))
 
 # Main menu
 def main_menu():
-    """ Main menu providing choices for Popular, Latest Tracks, and Genres """
     base_url = sys.argv[0]
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=popular', listitem=ListItem('Popular Tracks', iconImage='DefaultFolder.png'), isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=featured', listitem=ListItem('Featured Tracks', iconImage='DefaultFolder.png'), isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=latest', listitem=ListItem('Latest Tracks', iconImage='DefaultFolder.png'), isFolder=True)
+    addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=live', listitem=ListItem('Livestreams', iconImage='DefaultFolder.png'), isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=genres', listitem=ListItem('Genres', iconImage='DefaultFolder.png'), isFolder=True)
     addDirectoryItem(handle=int(sys.argv[1]), url=base_url + '?mode=search', listitem=ListItem('Search', iconImage='DefaultFolder.png'), isFolder=True)
     endOfDirectory(int(sys.argv[1]))
 
 # Function to choose search type
 def choose_search_type():
-    """ Asks user to select the type of search. """
     dialog = Dialog()
     types = ['Tracks']
     chosen = dialog.select('Search Type:', types)
@@ -80,7 +115,6 @@ def choose_search_type():
     return types[chosen]
 
 def search_tracks(query, search_type, page=1):
-    """ Perform search based on the type and query provided """
     if search_type == 'Tracks':
         search_url = BASE_URL + '/search?type=tracks&t=' + urllib2.quote(query) + '&page={}&count=20'.format(page)
     elif search_type == 'Playlists':
@@ -114,10 +148,10 @@ def initiate_search(search_type=None, query=None, page=1):
 
 # Function to fetch genres
 def fetch_genres():
-    """ Fetches available genres from HearThis.At """
     genres_url = BASE_URL + '/categories/'
     try:
-        response = urllib2.urlopen(genres_url)
+        request = urllib2.Request(genres_url, headers=HEADERS)
+        response = urllib2.urlopen(request, context=SSL_CONTEXT)
         genres = json.load(response)
         return genres
     except Exception as e:
@@ -126,12 +160,11 @@ def fetch_genres():
 
 # Function to list genres as ListItems in XBMC
 def list_genres():
-    """ Lists available genres in the XBMC/Kodi GUI """
     genres = fetch_genres()
     if genres:
         for genre in genres:
             # Check if the genre name is neither "Livestreams" nor "Replays"
-            if genre['name'] not in ["Livestreams", "Replays"]:
+            if genre['name'] not in ["", "Replays"]:
                 li = ListItem(genre['name'], iconImage='DefaultFolder.png')
                 url = '%s?mode=genre&genre_id=%s' % (sys.argv[0], genre['id'])
                 addDirectoryItem(handle=int(sys.argv[1]), url=url, listitem=li, isFolder=True)
@@ -141,7 +174,6 @@ def list_genres():
 
 # Function to parse parameters passed to the plugin
 def get_params():
-    """ Parse parameters passed to the plugin """
     param_string = sys.argv[2]
     params = {}
     if len(param_string) >= 2:
