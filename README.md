@@ -17,13 +17,12 @@ A hearthis.at Music plugin for the original Xbox using XBMC4Xbox (3.6+ as of v1.
 ## To Do:
 - Add Artists/Playlists/Sets/Songs/Genres/etc. to search functionality
 - Bugfixes and optimizations.
-- Fix Livestream support.
 - Implement offline "favourites" system.
 
 ## Bugs:
 - Some searches just don't work and will present a rate-limiting error. This doesn't seem to be an addon issue, this seems to be an API backend issue with HearThis not liking certain terms (usually terms around 4 characters or less). Try a longer query and try the same query on PC to see if it also gives you an error.
 - Artist and Playlist search is currently broken and is disabled in the current release.
-- "Livestreams" and "Replays" buttons in Genres currently don't work, so they're hidden by default.
+- "Replays" button in Genres currently don't work, so it's hidden by default.
 - Rarely, the "Next" and "Previous" buttons can disappear on a page. Going back a page and then going forward again should resolve it. 
 
  ## Not Planned:
